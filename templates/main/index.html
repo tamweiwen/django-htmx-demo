@@ -2,8 +2,9 @@
 
 {% block 'content' %}
 
-<h1>Notes</h1>
-{% include  'main/notes_list.html' %}
+<h1 class="mt-5">Notes</h1>
+{% comment %} {% include  'main/notes_list.html' %} {% endcomment %}
+<div hx-get="notes/list" hx-trigger="load"></div>
 
 <a class="btn btn-primary" href="{% url 'add_note' %}" role="button">Add A Note</a>
 
