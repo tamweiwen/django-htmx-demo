@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+
+<h1>Notes</h1>
+{% include  'main/notes_list.html' %}
+
+<a class="btn btn-primary" href="{% url 'add_note' %}" role="button">Add A Note</a>
+
+{% endblock 'content' %}
