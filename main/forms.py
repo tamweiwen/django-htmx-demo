@@ -6,9 +6,9 @@ from .models import Note
 
 
 class NotesForm(forms.ModelForm):
-    helper = FormHelper()
-    helper.add_input(Submit('submit', 'Add Note', css_class='btn-primary'))
-    helper.form_method = 'POST'
+    # helper = FormHelper()
+    # helper.add_input(Submit('submit', 'Add Note', css_class='btn-primary'))
+    # helper.form_method = 'POST'
 
     class Meta:
         model = Note

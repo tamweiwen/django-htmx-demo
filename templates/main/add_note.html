@@ -1,10 +1,31 @@
-{% extends 'base.html' %}
-{% block 'title' %} Add A Note {% endblock 'title' %}
-
-{% block 'content' %}
-
-{% load crispy_forms_tags %}
-{% csrf_token %}
-{% crispy form %}
-
-{% endblock 'content' %}
+{% load widget_tweaks %}
+{% with WIDGET_ERROR_CLASS='is-invalid' %}
+<form hx-post="{{ request.path }}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Edit Note</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+      {% render_field form.name class="form-control" placeholder="Go to sleep" %}
+      <div class="invalid-feedback">{{ form.name.errors|first }}</div>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.content.id_for_label }}" class="form-label">Content</label>
+      {% render_field form.content class="form-control" placeholder="I went to sleep earlier..." %}
+      <div class="invalid-feedback">{{ form.content.errors|first }}</div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    {% if note %}
+    <button type="button" class="btn btn-danger" hx-post="{% url 'remove_movie' pk=movie.pk %}">Remove</button>
+    <span class="flex-grow-1"></span>
+    {% endif %}
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+      Cancel
+    </button>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>
+{% endwith %}

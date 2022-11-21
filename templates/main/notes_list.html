@@ -1,23 +1,11 @@
-<table class="table">
-  <thead class="table-dark">
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Content</th>
-      <th scope="col" class="d-flex justify-content-end">Created At</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for note in notes reversed %}
-    <tr id="note-{{ note.pk }}" class="note-row" role="button">
-        <th scope="row">{{ note.name }}</th>
-        <td>
-          {{ note.content|truncatechars:40  }}
-        </td>
-        <td class="d-flex justify-content-end">
-          {{ note.created_at }}
-        </td>  
-    </tr>
-    {% endfor %}
-  </tbody>
-
-</table>
+{% for note in notes reversed %}
+<tr id="note-{{ note.pk }}" class="note-row" role="button">
+    <th scope="row">{{ note.name }}</th>
+    <td>
+      {{ note.content|truncatechars:40  }}
+    </td>
+    <td class="d-flex justify-content-end">
+      {{ note.created_at }}
+    </td>  
+</tr>
+{% endfor %}

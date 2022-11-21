@@ -6,5 +6,9 @@
 
 .note-row:hover {
     background-color: gray;
-    transition: 0.5s;
+    transition: 0.6s;
+}
+
+textarea{
+    resize: none;
 }

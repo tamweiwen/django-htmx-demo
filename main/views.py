@@ -1,4 +1,7 @@
-from django.shortcuts import render, redirect
+import json
+
+from django.shortcuts import render
+from django.http import HttpResponse
 from .forms import NotesForm
 from .models import Note
 
@@ -17,8 +20,16 @@ def add_note(request):
     if request.method == "POST":
         form = NotesForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect(index)
+            note = form.save()
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "movieListChanged": None,
+                        "showMessage": f"{note.name} added."
+                    })
+                })
+            # return redirect(index)
     else:
         form = NotesForm()
 
