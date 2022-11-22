@@ -1,5 +1,5 @@
 {% for note in notes reversed %}
-<tr id="note-{{ note.pk }}" class="note-row" role="button">
+<tr id="note-{{ note.pk }}" class="note-row" role="button" hx-get="{% url 'edit_note' pk=note.pk %}" hx-target="#dialog">
     <th scope="row">{{ note.name }}</th>
     <td>
       {{ note.content|truncatechars:40  }}

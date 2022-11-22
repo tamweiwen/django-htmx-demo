@@ -1,7 +1,9 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.views.decorators.http import require_POST
+
 from .forms import NotesForm
 from .models import Note
 
@@ -33,4 +35,42 @@ def add_note(request):
     else:
         form = NotesForm()
 
-    return render(request, "main/add_note.html", {'form': form})
+    return render(request, "main/note_form.html", {'form': form})
+
+
+def edit_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    if request.method == 'POST':
+        form = NotesForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "movieListChanged": None,
+                        "showMessage": f"{note.name} updated."
+                    })
+                }
+            )
+    else:
+        form = NotesForm(instance=note)
+    return render(request, "main/note_form.html", {
+        'form': form,
+        'note': note,
+    })
+
+
+@require_POST
+def remove_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    note.delete()
+    return HttpResponse(
+        status=204,
+        headers={
+            'HX-Trigger': json.dumps({
+                "movieListChanged": None,
+                "showMessage": f"{note.name} deleted."
+            })
+        }
+    )
