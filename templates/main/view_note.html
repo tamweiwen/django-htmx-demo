@@ -1,0 +1,24 @@
+{% load widget_tweaks %}
+{% with WIDGET_ERROR_CLASS='is-invalid' %}
+<form hx-post="{{ request.path }}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{ note.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <fieldset disabled>
+                <label for="{{ form.content.id_for_label }}" class="form-label">Content</label>
+                {% render_field form.content class="form-control" placeholder="Go to sleep" %}
+            </fieldset>
+        </div>
+    </div>
+    <div class="modal-footer">
+        {% if note %}
+        <span class="flex-grow-1"></span>
+        <button type="button" class="btn btn-danger" hx-post="{% url 'remove_note' pk=note.pk %}">Remove</button>
+        {% endif %}
+        <button class="btn btn-primary" hx-get="{% url 'edit_note' pk=note.pk %}" hx-target="#dialog">Edit</button>
+    </div>
+</form>
+{% endwith %}

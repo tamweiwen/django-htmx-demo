@@ -2,7 +2,11 @@
 {% with WIDGET_ERROR_CLASS='is-invalid' %}
 <form hx-post="{{ request.path }}" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="modal-content">
   <div class="modal-header">
-    <h5 class="modal-title">Edit Note</h5>
+    {% if note %}
+    <h5 class="modal-title">Edit {{ note.name }}</h5>
+    {% else %}
+    <h5 class="modal-title">Add A Note</h5>
+    {% endif %}
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body">

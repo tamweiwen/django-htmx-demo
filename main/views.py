@@ -74,3 +74,10 @@ def remove_note(request, pk):
             })
         }
     )
+
+
+def view_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    form = NotesForm(instance=note)
+
+    return render(request, 'main/view_note.html', {'note': note, 'form': form})
